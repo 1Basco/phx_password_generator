@@ -1,19 +1,19 @@
-<div class="row">
-    <div class="column column-60 column-offset 20">
-    <div class="row">
-        <div class="column column-80 column-offset 20">
-            <h1>Password Generator</h1>
+<div class="row" style="justify-content: center;">
+    <div class="column-80 column">
+        <div class="row">
+            <div class="column column-80 column-offset 20">
+                <h1>Password Generator</h1>
+            </div>
         </div>
-    </div>
-        <input type="text" name="password_final" id="password_output" value="">
+        <input type="text" name="password_final" id="password_output" value={@password}>
 
-        <.form let={f} for={:password} action={"/"}>
+        <.form let={f} for={:password} action={Routes.page_path(@conn, :generate)}>
             <div class="row">
                 <div class="column">
                     <%= label f, :password_length, "Password Length" %>
                 </div>
                 <div class="column">
-                    <%= select f, :length, [], class: "float-right" %>
+                    <%= select f, :length, @password_length, class: "float-right" %>
                 </div>
             </div>
             <div class="row">
@@ -24,6 +24,28 @@
                     <%= checkbox f, :uppercase, class: "float-right" %>
                     (e.g. MEMES)
                 </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <%= label f, :numbers, "Include numbers" %>
+                </div>
+                <div class="column">
+                    <%= checkbox f, :numbers, class: "float-right" %>
+                    (e.g. 2345678)
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <%= label f, :symbols, "Include special characters" %>
+                </div>
+                <div class="column">
+                    <%= checkbox f, :symbols, class: "float-right" %>
+                    (e.g. @#¨$)
+                </div>
+            </div>
+
+            <div class="row" style="padding-top: 2rem; justify-content: center;">
+                <%= submit "Generate Password", class: "column column-50"  %>
             </div>
         </.form>
     </div>
