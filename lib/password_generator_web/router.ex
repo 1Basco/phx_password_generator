@@ -21,14 +21,14 @@ defmodule PasswordGeneratorWeb.Router do
     get "/", PageController, :index
 
     post "/", PageController, :generate
-
-
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PasswordGeneratorWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PasswordGeneratorWeb.Api do
+    pipe_through :api
+
+    post "/generate_password", PageController, :api_generate
+  end
 
   # Enables LiveDashboard only for development
   #
