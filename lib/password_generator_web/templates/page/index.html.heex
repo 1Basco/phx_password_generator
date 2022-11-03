@@ -6,6 +6,7 @@
             </div>
         </div>
         <input type="text" name="password_final" id="password_output" value={@password}>
+        <span style="cursor:pointer;" onclick="copy(this)">copy link to clipboard</span>
 
         <.form let={f} for={:password} action={Routes.page_path(@conn, :generate)}>
             <div class="row">
@@ -50,3 +51,15 @@
         </.form>
     </div>
 </div>
+
+<script>
+    function copy(button) {
+        const element = button.previousElementSibling;
+        element.hidden = false;
+        element.value = element.value.trim();
+        element.select();
+        document.execCommand("copy");
+        element.blur();
+        //element.hidden = true;
+    }
+</script>
