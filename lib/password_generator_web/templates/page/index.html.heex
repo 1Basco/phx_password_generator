@@ -1,12 +1,12 @@
 <div class="row" style="justify-content: center;">
     <div class="column-80 column">
         <div class="row">
-            <div class="column column-80 column-offset 20">
+            <div class="column column-100">
                 <h1>Password Generator</h1>
             </div>
         </div>
         <input type="text" name="password_final" id="password_output" value={@password}>
-        <span style="cursor:pointer;" onclick="copy(this)">copy link to clipboard</span>
+        <span style="cursor:pointer;" onclick="copy(this)" value={@password}>copy link to clipboard <i class="fa fa-clipboard" aria-hidden="true"></i></span>
 
         <.form let={f} for={:password} action={Routes.page_path(@conn, :generate)}>
             <div class="row">
@@ -50,6 +50,13 @@
             </div>
         </.form>
     </div>
+    <div class="column-30 column">
+        <ul>
+        <%= for password_total <- @passwords do %>
+            <li onclick="copyLi(this)" style="cursor:pointer;" value={password_total.password}><%= password_total.password %><span style="cursor:pointer; margin-left: 10px;"><i class="fa fa-clipboard" aria-hidden="true"></i></span></li>
+        <% end %>
+        </ul>
+    </div>
 </div>
 
 <script>
@@ -59,6 +66,14 @@
         element.value = element.value.trim();
         element.select();
         document.execCommand("copy");
+        element.blur();
+        //element.hidden = true;
+    }
+    function copyLi(button) {
+        console.log("click", button)
+        element = button;
+        element.hidden = false;
+        navigator.clipboard.writeText(element.innerText);
         element.blur();
         //element.hidden = true;
     }
